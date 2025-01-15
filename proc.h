@@ -56,3 +56,14 @@ struct proc {
 //   original data and bss
 //   fixed-size stack
 //   expandable heap
+
+
+// CHANGE
+
+int getNumProc(void); // declaring function in header
+
+
+
+
+
+

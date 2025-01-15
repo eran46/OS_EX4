@@ -532,3 +532,31 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+
+// CHANGE
+
+int getNumProc(void){ // returns integer count - number of processes in process table ptable
+  struct proc p_ptr;
+  int count = 0;
+  
+  // ptable holds proc proc[] and spinlock lock
+  // we need to associate the lock to current cpu using the builtin function
+  acquire(&ptable.lock); // lock process table (by mycpu())
+  
+  // NPROC - max number of processes from defs.h
+  for(int i = 0; i<NPROC; i++){ 
+    p_ptr = ptable.proc[i];
+    // UNUSED = 0 from enum procstate from proc.h
+    if(p_ptr.state != UNUSED){ // if process is used
+      count++;
+    }
+  }
+  
+  release(&ptable.lock); // unlock ptable
+  return count;
+}
+
+
+
+
