@@ -61,7 +61,7 @@ struct proc {
 // CHANGE
 
 int getNumProc(void); // declaring function in header
-
+int getProcInfo(int pid,void* processInfo);
 
 
 

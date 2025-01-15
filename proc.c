@@ -6,7 +6,7 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
-#include "processInfo" // CHANGE
+#include "processInfo.h" // CHANGE
 
 struct {
   struct spinlock lock;
@@ -556,6 +556,43 @@ int getNumProc(void){ // returns integer count - number of processes in process 
   
   release(&ptable.lock); // unlock ptable
   return count;
+}
+
+int count_open_file_descriptors(struct proc *p) {
+// notes:
+// no need to stop interrupt - will not close open files
+// no need for mutex - no miltithreading in xv6 
+
+    int count = 0;
+
+    for (int i = 0; i < NOFILE; i++) {
+        if (p->ofile[i] != NULL) {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+int getProcInfo(int pid,void* processInfo){
+  struct processInfo *new_processInfo = (struct processInfo*)processInfo; // cast pointer to struct processInfo*
+  truct proc *p;
+  // critical region
+  acquire(&ptable.lock); 
+  for(p = ptable->proc; p<ptable->proc[NPROC]; p++){ // iterate over process table
+    if(p->pid == pid){
+      	  new_processInfo->ppid = p->parent->pid;
+      	  new_processInfo->sz = p->sz;
+      	  new_processInfo->state = (int)p->state;
+      	  new_processInfo->nfd = count_open_file_descriptors(p);
+      	  // new_processInfo->nrswitch = ???
+      	  release(&ptable.lock); 
+      	  return 0;
+    }
+  }
+  
+  release(&ptable.lock); 
+  return -1;
 }
 
 
