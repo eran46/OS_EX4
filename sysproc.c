@@ -89,3 +89,13 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// CHANGE
+
+int
+sys_getNumProc(void) // defining the system call
+{
+  return getNumProc(); // helper function implemented in proc.c
+}
+
+
