@@ -104,7 +104,7 @@ extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
 // CHANGE
-extern int sys_getNumProc(void) // function defined in other src file
+extern int sys_getNumProc(void); // function defined in other src file
 
 
 static int (*syscalls[])(void) = {
