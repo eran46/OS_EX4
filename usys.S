@@ -29,5 +29,4 @@ SYSCALL(getpid)
 SYSCALL(sbrk)
 SYSCALL(sleep)
 SYSCALL(uptime)
-// CHANGE
-SYSCALL(getNumProc) // declare the syscall
+SYSCALL(getNumProc) // CHANGE - declare the syscall
