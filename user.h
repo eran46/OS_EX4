@@ -1,3 +1,5 @@
+#include "processInfo.h" // CHANGE - exposed structure processInfo to user space programs
+
 struct stat;
 struct rtcdate;
 

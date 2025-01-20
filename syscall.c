@@ -105,6 +105,7 @@ extern int sys_write(void);
 extern int sys_uptime(void);
 // CHANGE
 extern int sys_getNumProc(void); // function defined in other src file
+extern int sys_getProcInfo(void); 
 
 
 static int (*syscalls[])(void) = {
