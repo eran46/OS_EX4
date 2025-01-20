@@ -1,3 +1,5 @@
+#include "processInfo.h" // CHANGE - exposed structure processInfo to user space programs
+
 struct stat;
 struct rtcdate;
 
@@ -23,7 +25,10 @@ int getpid(void);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);
-int getNumProc(void); // CHANGE
+// CHANGE
+int getNumProc(void);
+int getProcInfo(int pid,void* processInfo); 
+
 
 // ulib.c
 int stat(const char*, struct stat*);

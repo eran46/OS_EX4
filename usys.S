@@ -31,3 +31,4 @@ SYSCALL(sleep)
 SYSCALL(uptime)
 // CHANGE
 SYSCALL(getNumProc) // declare the syscall
+SYSCALL(getProcInfo)

@@ -6,6 +6,7 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+#include "processInfo.h"
 
 int
 sys_fork(void)
@@ -97,5 +98,25 @@ sys_getNumProc(void) // defining the system call
 {
   return getNumProc(); // helper function implemented in proc.c
 }
+
+
+int
+sys_getProcInfo(void) {
+    int pid;
+    struct processInfo *processInfo;
+
+    if (argint(0, &pid) < 0)
+        return -1;
+
+    if (argptr(1, (char **)&processInfo, sizeof(*processInfo)) < 0)
+        return -1;
+
+    return getProcInfo(pid, processInfo);
+}
+
+
+
+
+
 
 

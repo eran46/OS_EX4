@@ -5,3 +5,6 @@ usys.S
 sysproc.c
 proc.c
 proc.h
+user.h
+processInfo.h
+
