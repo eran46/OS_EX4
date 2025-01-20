@@ -131,7 +131,8 @@ static int (*syscalls[])(void) = {
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
 // CHANGE
-[SYS_getNumProc] sys_getNumProc // add to syscalls array
+[SYS_getNumProc] sys_getNumProc, // add to syscalls array
+[SYS_getProcInfo ] sys_getProcInfo 
 };
 
 void

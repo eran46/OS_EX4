@@ -29,6 +29,7 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int getNumProc(void); // CHANGE
+int getProcInfo(int pid,void* processInfo); // CHANGE
 
 // ulib.c
 int stat(const char*, struct stat*);
