@@ -1,4 +1,7 @@
-#include "processInfo.h" // CHANGE - exposed structure processInfo to user space programs
+#ifndef PROCESSINFO
+#define PROCESSINFO
+#include "processInfo.h" // CHANGE
+#endif
 
 struct stat;
 struct rtcdate;
