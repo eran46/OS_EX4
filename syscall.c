@@ -132,7 +132,7 @@ static int (*syscalls[])(void) = {
 [SYS_close]   sys_close,
 // CHANGE
 [SYS_getNumProc] sys_getNumProc, // add to syscalls array
-[SYS_getProcInfo ] sys_getProcInfo 
+[SYS_getProcInfo] sys_getProcInfo,
 };
 
 void
