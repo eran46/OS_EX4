@@ -7,6 +7,7 @@
 #include "proc.h"
 #include "spinlock.h"
 
+
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
@@ -556,6 +557,29 @@ int getNumProc(void){ // returns integer count - number of processes in process 
   release(&ptable.lock); // unlock ptable
   return count;
 }
+
+
+int getMaxPid(void) {
+    int max_pid = -1;  // initialize max PID to an invalid value
+    struct proc *p;
+
+    acquire(&ptable.lock);  // lock the process table for safe access
+    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) { // NPROC- represents the maximum number of processes the system can support at any given time
+    
+        if (p->state != UNUSED && p->pid > max_pid) { // if the process is on active mode and it PID is bigger then the currently PID
+        
+            max_pid = p->pid;  // update max PID if a larger one is found
+        }
+    }
+    release(&ptable.lock);  // unlock the process table
+    
+    if (max_pid == -1) {
+        cprintf("sys_getMaxPid found no active processes.\n"); 
+    }
+    
+    return max_pid;         // return the maximum PID
+}
+
 
 
 

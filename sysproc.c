@@ -43,7 +43,7 @@ sys_getpid(void)
 }
 
 int
-sys_sbrk(void)
+sys_sbrk(void)     //  adjusts the size of the process’s memory
 {
   int addr;
   int n;
@@ -97,5 +97,18 @@ sys_getNumProc(void) // defining the system call
 {
   return getNumProc(); // helper function implemented in proc.c
 }
+
+
+int sys_getMaxPid(void) 
+{
+ 
+    return getNumProc();         // return the maximum PID, helper function implemented in proc.c
+    
+}
+
+
+
+
+
 
 
