@@ -570,7 +570,7 @@ int count_open_file_descriptors(struct proc *p) {
     int count = 0;
 
     for (int i = 0; i < NOFILE; i++) {
-        if (p->ofile[i] != NULL) {
+        if (p->ofile[i] != 0) {
             count++;
         }
     }
@@ -583,13 +583,13 @@ int getProcInfo(int pid,void* processInfo){
   struct proc *p;
   // critical region
   acquire(&ptable.lock); 
-  for(p = ptable->proc; p < ptable->proc[NPROC]; p++){ // iterate over process table addresses
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){ // iterate over process table addresses
     if(p->pid == pid){
       	  processInfo_ptr->ppid = p->parent->pid;
       	  processInfo_ptr->sz = p->sz;
       	  processInfo_ptr->state = (int)p->state;
       	  processInfo_ptr->nfd = count_open_file_descriptors(p);
-      	  processInfo_ptr->nrswitch = p->nrswitch
+      	  processInfo_ptr->nrswitch = p->nrswitch;
       	  release(&ptable.lock); 
       	  return 0;
     }
