@@ -177,6 +177,9 @@ UPROGS=\
 	_memtest\
 	_mkdir\
 	_nfd_test\
+	_nrswitch_test\
+	_nrswitch_3_test\
+	_nrswitch_atias_test\
 	_ps\
 	_ps_demo\
 	_rm\
@@ -253,7 +256,7 @@ qemu-nox-gdb: fs.img xv6.img .gdbinit
 
 EXTRA=\
 	mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c\
-	ln.c ls.c memtest.c mkdir.c nfd_test.c ps.c ps_demo.c rm.c stressfs.c usertests.c wc.c zombie.c\
+	ln.c ls.c memtest.c mkdir.c nfd_test.c nrswitch_test.c nrswitch_3_test.c nrswitch_atias_test.c ps.c ps_demo.c rm.c stressfs.c usertests.c wc.c zombie.c\
 	printf.c umalloc.c\
 	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
 	.gdbinit.tmpl gdbutil\

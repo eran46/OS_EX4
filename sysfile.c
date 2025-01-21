@@ -330,7 +330,6 @@ sys_open(void)
   }
   //CHANGE
   // at this point, a file descriptor was allocated
-  myproc()->nfd++; // increment the number of open file descriptors for the current process
 
   //END OF CHANGE
   iunlock(ip);
@@ -446,6 +445,7 @@ sys_pipe(void)
   if((fd0 = fdalloc(rf)) < 0 || (fd1 = fdalloc(wf)) < 0){
     if(fd0 >= 0)
       myproc()->ofile[fd0] = 0;
+      myproc()->nfd--;
     fileclose(rf);
     fileclose(wf);
     return -1;
