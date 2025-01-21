@@ -8,12 +8,13 @@
 // Function to convert process state to string
 char* get_state_name(int state) {
     switch (state) {
-        case 0: return "EMBRYO";
-        case 1: return "SLEEPING";
-        case 2: return "RUNNABLE";
-        case 3: return "RUNNING";
-        case 4: return "ZOMBIE";
-        default: return "UNKNOWN";
+        case 0: return "unused";
+        case 1: return "embryo";
+        case 2: return "sleeping";
+        case 3: return "runnable";
+        case 4: return "running";
+        case 5: return "zombie";
+        default: return "ERROR";
     }
 }
 

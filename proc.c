@@ -249,6 +249,7 @@ exit(void)
     if(curproc->ofile[fd]){
       fileclose(curproc->ofile[fd]);
       curproc->ofile[fd] = 0;
+      curproc->nfd--;
     }
   }
 
