@@ -82,7 +82,10 @@ allocproc(void)
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
     if(p->state == UNUSED)
       goto found;
-
+      //change
+      p->nfd = 0;       // Initialize nfd to 0
+      p->nrswitch = 0;  // Initialize nrswitch to 0
+      // finish change
   release(&ptable.lock);
   return 0;
 
@@ -341,6 +344,9 @@ scheduler(void)
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
       c->proc = p;
+      //change
+      p->nrswitch++; // increment the context switch counter
+      //end of change
       switchuvm(p);
       p->state = RUNNING;
 

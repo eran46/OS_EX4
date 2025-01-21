@@ -49,6 +49,9 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+  //change
+  int nfd;       // number of open file descriptors
+  int nrswitch;  // number of times the process was context-switched in
 
 };
 
