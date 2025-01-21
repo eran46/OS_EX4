@@ -61,10 +61,11 @@ int main() {
     // Print header
     printf(1, "Total number of active processes: %d\n", num_procs);
     printf(1, "Maximum PID: %d\n", max_pid);
+    printf(1, "\n");
     printf(1, "PID         STATE       PPID        SZ          NFD         NRSWITCH\n");
 
     // Iterate over all possible PIDs
-    for (int pid = 0; pid <= max_pid; pid++) {
+    for (int pid = 1; pid <= max_pid; pid++) {
         struct processInfo pinfo;
         if (getProcInfo(pid, &pinfo) == 0) { // If process exists
             print_int_fixed_width(1, pid, MAX_WIDTH);

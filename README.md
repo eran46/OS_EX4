@@ -7,4 +7,6 @@ proc.c
 proc.h
 user.h
 processInfo.h
-
+ps.c
+Makefile
+sysfile.c
