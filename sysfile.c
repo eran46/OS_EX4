@@ -46,6 +46,7 @@ fdalloc(struct file *f)
   for(fd = 0; fd < NOFILE; fd++){
     if(curproc->ofile[fd] == 0){
       curproc->ofile[fd] = f;
+      curproc->nfd++;
       return fd;
     }
   }
@@ -328,8 +329,8 @@ sys_open(void)
     return -1;
   }
   //CHANGE
-  // at this point, a file descriptor has allocated
-  proc->nfd++; // increment the number of open file descriptors for the current process
+  // at this point, a file descriptor was allocated
+  myproc()->nfd++; // increment the number of open file descriptors for the current process
 
   //END OF CHANGE
   iunlock(ip);

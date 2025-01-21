@@ -207,6 +207,8 @@ fork(void)
   np->sz = curproc->sz;
   np->parent = curproc;
   *np->tf = *curproc->tf;
+  np->nrswitch = 0;
+  np->nfd = curproc->nfd;
 
   // Clear %eax so that fork returns 0 in the child.
   np->tf->eax = 0;
@@ -348,11 +350,9 @@ scheduler(void)
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
       c->proc = p;
-      //change
-      p->nrswitch++; // increment the context switch counter
       //end of change
       switchuvm(p);
-      p->nrswitch++;
+      p->nrswitch++; // increment the context switch counter
       p->state = RUNNING;
 
       swtch(&(c->scheduler), p->context);
@@ -535,7 +535,7 @@ procdump(void)
       state = states[p->state];
     else
       state = "???";
-    cprintf("%d %s %s", p->pid, state, p->name);
+    cprintf("%d %s %s ", p->pid, state, p->name);
     if(p->state == SLEEPING){
       getcallerpcs((uint*)p->context->ebp+2, pc);
       for(i=0; i<10 && pc[i] != 0; i++)
@@ -569,21 +569,6 @@ int getNumProc(void){ // returns integer count - number of processes in process 
   return count;
 }
 
-int count_open_file_descriptors(struct proc *p) {
-// notes:
-// no need to stop interrupt - will not close open files
-// no need for mutex - no miltithreading in xv6 
-
-    int count = 0;
-
-    for (int i = 0; i < NOFILE; i++) {
-        if (p->ofile[i] != 0) {
-            count++;
-        }
-    }
-
-    return count;
-}
 
 int getProcInfo(int pid,void* processInfo){
   struct processInfo* processInfo_ptr = (struct processInfo*)processInfo; // cast pointer to struct processInfo*
@@ -595,7 +580,7 @@ int getProcInfo(int pid,void* processInfo){
       	  processInfo_ptr->ppid = p->parent->pid;
       	  processInfo_ptr->sz = p->sz;
       	  processInfo_ptr->state = (int)p->state;
-      	  processInfo_ptr->nfd = count_open_file_descriptors(p);
+      	  processInfo_ptr->nfd = p->nfd;
       	  processInfo_ptr->nrswitch = p->nrswitch;
       	  release(&ptable.lock); 
       	  return 0;
