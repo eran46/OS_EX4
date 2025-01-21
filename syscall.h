@@ -23,4 +23,5 @@
 // CHANGE
 #define SYS_getNumProc 22 // unique system call number, used as syscalls array index
 #define SYS_getMaxPid 23  // use an available system call number
+#define SYS_getProcInfo 24
 

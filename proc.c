@@ -6,6 +6,7 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
+#include "processInfo.h" // CHANGE
 
 
 struct {
@@ -53,6 +54,7 @@ mycpu(void)
   panic("unknown apicid\n");
 }
 
+
 // Disable interrupts so that we are not rescheduled
 // while reading proc from the cpu structure
 struct proc*
@@ -65,6 +67,7 @@ myproc(void) {
   popcli();
   return p;
 }
+
 
 //PAGEBREAK: 32
 // Look in the process table for an UNUSED proc.
@@ -92,6 +95,7 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
+  p->nrswitch = 0;
 
   release(&ptable.lock);
 
@@ -348,6 +352,7 @@ scheduler(void)
       p->nrswitch++; // increment the context switch counter
       //end of change
       switchuvm(p);
+      p->nrswitch++;
       p->state = RUNNING;
 
       swtch(&(c->scheduler), p->context);
@@ -562,6 +567,43 @@ int getNumProc(void){ // returns integer count - number of processes in process 
   
   release(&ptable.lock); // unlock ptable
   return count;
+}
+
+int count_open_file_descriptors(struct proc *p) {
+// notes:
+// no need to stop interrupt - will not close open files
+// no need for mutex - no miltithreading in xv6 
+
+    int count = 0;
+
+    for (int i = 0; i < NOFILE; i++) {
+        if (p->ofile[i] != 0) {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+int getProcInfo(int pid,void* processInfo){
+  struct processInfo* processInfo_ptr = (struct processInfo*)processInfo; // cast pointer to struct processInfo*
+  struct proc *p;
+  // critical region
+  acquire(&ptable.lock); 
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){ // iterate over process table addresses
+    if(p->pid == pid){
+      	  processInfo_ptr->ppid = p->parent->pid;
+      	  processInfo_ptr->sz = p->sz;
+      	  processInfo_ptr->state = (int)p->state;
+      	  processInfo_ptr->nfd = count_open_file_descriptors(p);
+      	  processInfo_ptr->nrswitch = p->nrswitch;
+      	  release(&ptable.lock); 
+      	  return 0;
+    }
+  }
+  release(&ptable.lock); 
+  // if PID wasnt in ptable = invalid pid
+  return -1;
 }
 
 

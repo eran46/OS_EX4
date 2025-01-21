@@ -32,4 +32,5 @@ SYSCALL(uptime)
 // CHANGE
 SYSCALL(getNumProc) // declare the syscall
 SYSCALL(getMaxPid)  // declare the syscall
+SYSCALL(getProcInfo) // declare the syscall
 
