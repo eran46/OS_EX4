@@ -103,7 +103,6 @@ sys_getNumProc(void) // defining the system call
 
 int sys_getMaxPid(void)
 {
- 
     return getMaxPid();         // return the maximum PID, helper function implemented in proc.c
 }
 
