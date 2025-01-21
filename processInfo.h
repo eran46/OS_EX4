@@ -1,3 +1,7 @@
+
+#ifndef PROCESSINFO
+#define PROCESSINFO
+
 struct processInfo{
 	int state;	// process state
 	int ppid;		// parent PID
@@ -6,3 +10,4 @@ struct processInfo{
 	int nrswitch;	// number context switches in
 };
 
+#endif
