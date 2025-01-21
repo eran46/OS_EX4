@@ -1,8 +1,6 @@
-//
 // File-system system calls.
 // Mostly argument checking, since we don't trust
 // user code, and calls into file.c and fs.c.
-//
 
 #include "types.h"
 #include "defs.h"
@@ -67,6 +65,7 @@ sys_dup(void)
   return fd;
 }
 
+
 int
 sys_read(void)
 {
@@ -104,9 +103,9 @@ sys_close(void)
   
   //CHANGE
   // decrement nfd
-  myproc()->nfd--;
-  
+  myproc()->nfd --;
  //END OF CHANGE
+ 
   return 0;
 }
 
@@ -328,11 +327,7 @@ sys_open(void)
     end_op();
     return -1;
   }
-  //CHANGE
-  // at this point, a file descriptor was allocated
-  myproc()->nfd++; // increment the number of open file descriptors for the current process
-
-  //END OF CHANGE
+ 
   iunlock(ip);
   end_op();
 
@@ -444,8 +439,13 @@ sys_pipe(void)
     return -1;
   fd0 = -1;
   if((fd0 = fdalloc(rf)) < 0 || (fd1 = fdalloc(wf)) < 0){
-    if(fd0 >= 0)
+    if(fd0 >= 0){
       myproc()->ofile[fd0] = 0;
+      //CHANGE
+      myproc()->nfd =0;
+      //END OF CHANGE
+      
+      }
     fileclose(rf);
     fileclose(wf);
     return -1;
