@@ -190,6 +190,5 @@ void            clearpteu(pde_t *pgdir, char *uva);
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))
 
 
-int sys_getMaxPid(void); // declare new system call prototypes 
 
 

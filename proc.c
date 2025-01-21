@@ -577,7 +577,13 @@ int getProcInfo(int pid,void* processInfo){
   acquire(&ptable.lock); 
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){ // iterate over process table addresses
     if(p->pid == pid){
-      	  processInfo_ptr->ppid = p->parent->pid;
+    	  if(pid <= 1){
+    	    processInfo_ptr->ppid = 0;
+    	  }
+    	  else{
+    	    processInfo_ptr->ppid = p->parent->pid;
+    	  }
+      	  
       	  processInfo_ptr->sz = p->sz;
       	  processInfo_ptr->state = (int)p->state;
       	  processInfo_ptr->nfd = p->nfd;
