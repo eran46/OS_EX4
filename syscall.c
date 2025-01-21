@@ -105,7 +105,9 @@ extern int sys_write(void);
 extern int sys_uptime(void);
 // CHANGE
 extern int sys_getNumProc(void); // function defined in other src file
+extern int sys_getMaxPid(void); // function defined in other src file
 extern int sys_getProcInfo(void); 
+
 
 
 static int (*syscalls[])(void) = {
@@ -131,8 +133,9 @@ static int (*syscalls[])(void) = {
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
 // CHANGE
-[SYS_getNumProc] sys_getNumProc // add to syscalls array
-[SYS_getProcInfo] sys_getProcInfo 
+[SYS_getNumProc] sys_getNumProc, // add to syscalls array
+[SYS_getMaxPid] sys_getMaxPid, // add to syscalls array
+[SYS_getProcInfo] sys_getProcInfo
 };
 
 void
@@ -150,3 +153,8 @@ syscall(void)
     curproc->tf->eax = -1;
   }
 }
+
+
+
+
+
