@@ -100,6 +100,12 @@ sys_close(void)
     return -1;
   myproc()->ofile[fd] = 0;
   fileclose(f);
+  
+  //CHANGE
+  // decrement nfd
+  myproc()->nfd--;
+  
+ //END OF CHANGE
   return 0;
 }
 
@@ -321,6 +327,11 @@ sys_open(void)
     end_op();
     return -1;
   }
+  //CHANGE
+  // at this point, a file descriptor has allocated
+  proc->nfd++; // increment the number of open file descriptors for the current process
+
+  //END OF CHANGE
   iunlock(ip);
   end_op();
 

@@ -49,9 +49,11 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
-  // CHANGE
-  int nrswitch; // number of times the process is switched to via context switching
+  //change
+  int nfd;       // number of open file descriptors
+  int nrswitch;  // number of times the process was context-switched in
 };
+
 
 // Process memory is laid out contiguously, low addresses first:
 //   text
@@ -61,10 +63,9 @@ struct proc {
 
 
 // CHANGE
-
 int getNumProc(void); // declaring function in header
 int getProcInfo(int pid,void* processInfo);
-
+// ============================== PROTOTYPE
 
 
 

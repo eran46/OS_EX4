@@ -1,5 +1,6 @@
 #include "processInfo.h" // CHANGE - exposed structure processInfo to user space programs
 
+
 struct stat;
 struct rtcdate;
 
@@ -28,6 +29,7 @@ int uptime(void);
 // CHANGE
 int getNumProc(void);
 int getProcInfo(int pid,void* processInfo); 
+int getMaxPid(void);
 
 
 // ulib.c
@@ -43,3 +45,4 @@ void* memset(void*, int, uint);
 void* malloc(uint);
 void free(void*);
 int atoi(const char*);
+

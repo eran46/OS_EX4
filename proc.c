@@ -8,6 +8,7 @@
 #include "spinlock.h"
 #include "processInfo.h" // CHANGE
 
+
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
@@ -84,7 +85,10 @@ allocproc(void)
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
     if(p->state == UNUSED)
       goto found;
-
+      //change
+      p->nfd = 0;       // Initialize nfd to 0
+      p->nrswitch = 0;  // Initialize nrswitch to 0
+      // finish change
   release(&ptable.lock);
   return 0;
 
@@ -344,6 +348,9 @@ scheduler(void)
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
       c->proc = p;
+      //change
+      p->nrswitch++; // increment the context switch counter
+      //end of change
       switchuvm(p);
       p->nrswitch++;
       p->state = RUNNING;
@@ -598,6 +605,29 @@ int getProcInfo(int pid,void* processInfo){
   // if PID wasnt in ptable = invalid pid
   return -1;
 }
+
+
+int getMaxPid(void) {
+    int max_pid = -1;  // initialize max PID to an invalid value
+    struct proc *p;
+
+    acquire(&ptable.lock);  // lock the process table for safe access
+    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) { // NPROC- represents the maximum number of processes the system can support at any given time
+    
+        if (p->state != UNUSED && p->pid > max_pid) { // if the process is on active mode and it PID is bigger then the currently PID
+        
+            max_pid = p->pid;  // update max PID if a larger one is found
+        }
+    }
+    release(&ptable.lock);  // unlock the process table
+    
+    if (max_pid == -1) {
+        cprintf("sys_getMaxPid found no active processes.\n"); 
+    }
+    
+    return max_pid;         // return the maximum PID
+}
+
 
 
 
